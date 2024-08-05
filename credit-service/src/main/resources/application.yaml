@@ -24,5 +24,10 @@ spring:
         time_zone: UTC
 
     open-in-view: false
+  kafka:
+    bootstrap-servers: host.docker.internal:9092
+kafka:
+  topic: credit-installment
+
 
 
