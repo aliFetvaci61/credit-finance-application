@@ -14,13 +14,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "USER",uniqueConstraints = {
-        @UniqueConstraint(name = "USER_IDENTIFICATION_NUMBER", columnNames = {"IDENTIFICATION_NUMBER"})
-})
+@Table(name = "USER")
 @Entity
 public class User extends BaseEntity{
 
-    @Column(name = "IDENTIFICATION_NUMBER", nullable = false, updatable = false)
+    @Column(name = "IDENTIFICATION_NUMBER", nullable = false, updatable = false, unique = true)
     private String identificationNumber;
 
     @Column(name = "FIRSTNAME", nullable = false)
