@@ -28,5 +28,73 @@ services:
     networks:
       - my-network
 
+
+  #auth-service config
+  auth-service:
+    container_name: auth-service
+    image: auth-service
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "6190:6190"
+    volumes:
+      - $HOME/app:/var/app
+    environment:
+      - SECURITY_JWT_SECRET_KEY=3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+      - SECURITY_JWT_EXPIRATION_TIME:300000
+    networks:
+      - my-network
+
+  #credit-service config
+  credit-service:
+    container_name: credit-service
+    image: credit-service
+    build:
+      context: ./credit-service
+      dockerfile: Dockerfile
+    ports:
+      - "6180:6180"
+    volumes:
+      - $HOME/app:/var/app
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/credit-db?useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+    networks:
+      - my-network
+
+  #user-service config
+  user-service:
+    container_name: user-service
+    image: user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "6170:6170"
+    volumes:
+      - $HOME/app:/var/app
+    depends_on:
+      - postgres-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/postgres?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+
+  #user-service config
+  gateway:
+    container_name: gateway
+    image: gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - "6161:6161"
+    volumes:
+      - $HOME/app:/var/app
+
 networks:
   my-network:

@@ -1,5 +1,6 @@
 package com.alifetvaci.credit.gateway.service;
 
+import com.alifetvaci.credit.gateway.exception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -18,7 +19,11 @@ public class JwtService {
     private String secretKey;
 
     public Claims isTokenValid(String token) {
-        return isTokenExpired(token) ?null:extractClaims(token);
+        try{
+            return isTokenExpired(token) ?null:extractClaims(token);
+        }catch (Exception e){
+            throw new UnauthorizedException();
+        }
     }
 
     private Claims extractClaims(String token) {

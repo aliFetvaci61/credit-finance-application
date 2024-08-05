@@ -10,49 +10,49 @@ spring:
     gateway:
       routes:
         - id: register-user
-          uri: ${USER_SERVICE_BASE_URL:http://localhost:6170}
+          uri: ${USER_SERVICE_BASE_URL:http://host.docker.internal:6170}
           predicates:
             - Path=/user-service/api/v1/register
             - Method=POST
           metadata:
             tokenRequired: false
         - id: login-user
-          uri: ${USER_SERVICE_BASE_URL:http://localhost:6170}
+          uri: ${USER_SERVICE_BASE_URL:http://host.docker.internal:6170}
           predicates:
             - Path=/user-service/api/v1/login
             - Method=POST
           metadata:
             tokenRequired: false
         - id: create-credit
-          uri: ${CREDIT_SERVICE_BASE_URL:http://localhost:6180}
+          uri: ${CREDIT_SERVICE_BASE_URL:http://host.docker.internal:6180}
           predicates:
             - Path=/credit-service/api/v1/credit
             - Method=POST
           metadata:
             tokenRequired: true
         - id: get-credits
-          uri: ${CREDIT_SERVICE_BASE_URL:http://localhost:6180}
+          uri: ${CREDIT_SERVICE_BASE_URL:http://host.docker.internal:6180}
           predicates:
             - Path=/credit-service/api/v1/credit
             - Method=GET
           metadata:
             tokenRequired: true
         - id: get-credit
-          uri: ${CREDIT_SERVICE_BASE_URL:http://localhost:6180}
+          uri: ${CREDIT_SERVICE_BASE_URL:http://host.docker.internal:6180}
           predicates:
             - Path=/credit-service/api/v1/credit/{credit}
             - Method=GET
           metadata:
             tokenRequired: true
         - id: get-credit-installments
-          uri: ${CREDIT_SERVICE_BASE_URL:http://localhost:6180}
+          uri: ${CREDIT_SERVICE_BASE_URL:http://host.docker.internal:6180}
           predicates:
             - Path=/credit-service/api/v1/credit/{credit}/installment
             - Method=GET
           metadata:
             tokenRequired: true
         - id: pay-credit-installments
-          uri: ${CREDIT_SERVICE_BASE_URL:http://localhost:6180}
+          uri: ${CREDIT_SERVICE_BASE_URL:http://host.docker.internal:6180}
           predicates:
             - Path=/credit-service/api/v1/credit/{credit}/installment/{installment}
             - Method=POST

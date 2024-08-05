@@ -6,7 +6,7 @@ spring:
   application:
     name: user-service
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://host.docker.internal:5432/postgres}
     username: ${SPRING_DATASOURCE_USERNAME:user}
     password: ${SPRING_DATASOURCE_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
@@ -24,4 +24,4 @@ spring:
 
 service:
   auth:
-    url: ${AUTH_SERVICE_BASE_URL:http://localhost:6190}
+    url: ${AUTH_SERVICE_BASE_URL:http://host.docker.internal:6190}
