@@ -43,7 +43,7 @@ public class CreditService {
         Calendar calendar = Calendar.getInstance();
         List<InstallmentPublishEvent> installments = new ArrayList<>();
         for (int i = 1; i <= request.getInstallmentCount(); i++) {
-            calendar.add(Calendar.MONTH, 1);
+            calendar.add(Calendar.DATE, 30);
             int minusDays = 0;
             if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
                 calendar.add(Calendar.DATE, 2);
@@ -60,7 +60,13 @@ public class CreditService {
     }
 
     public List<CreditResponse> getCredits(String identificationNumber) {
-        return elasticCreditInstallmentRepository.findByIdentificationNumber(identificationNumber).stream()
+        List<CreditInstallment> creditInstallments = elasticCreditInstallmentRepository.findByIdentificationNumber(identificationNumber).orElseThrow(() -> GenericException.builder()
+                .httpStatus(HttpStatus.NOT_FOUND)
+                .logMessage(this.getClass().getName() + ".getCredit credit not found with this identification number {0}", identificationNumber)
+                .message(ErrorCode.CREDIT_NOT_FOUND)
+                .build());
+
+        return creditInstallments.stream()
                 .map(credit -> CreditResponse.builder().id(credit.getId()).amount(credit.getAmount()).status(credit.getStatus()).build())
                 .toList();
     }

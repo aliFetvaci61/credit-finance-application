@@ -2,7 +2,9 @@ package com.alifetvaci.credit.gateway.filter;
 
 import com.alifetvaci.credit.gateway.exception.UnauthorizedException;
 import com.alifetvaci.credit.gateway.filter.constant.HeaderConstants;
+import com.alifetvaci.credit.gateway.redis.model.Session;
 import com.alifetvaci.credit.gateway.service.JwtService;
+import com.alifetvaci.credit.gateway.service.SessionService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,8 @@ public class TokenFilter implements GlobalFilter {
 
     private final JwtService jwtService;
 
+    private final SessionService sessionService;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
@@ -35,12 +39,17 @@ public class TokenFilter implements GlobalFilter {
             String token = getByKeyFromHeaders(HttpHeaders.AUTHORIZATION, exchange.getRequest());
             final String authToken = token.substring(7);
             Claims claims = jwtService.isTokenValid(authToken);
-            if (claims != null) {
-                addInformationHeadersFromClaims(exchange, claims);
-                return chain.filter(exchange);
-            } else {
+            if (Objects.isNull(claims)) {
                 return Mono.error(new UnauthorizedException());
             }
+            String uuid = claims.get("sub", String.class);
+            Session session = sessionService.getValue(uuid);
+            if(Objects.isNull(session)){
+                return Mono.error(new UnauthorizedException());
+            }
+            addInformationHeadersFromClaims(exchange, session);
+            return chain.filter(exchange);
+
         }
         else {
             return chain.filter(exchange);
@@ -48,11 +57,11 @@ public class TokenFilter implements GlobalFilter {
 
     }
 
-    private void addInformationHeadersFromClaims(ServerWebExchange exchange, Claims claims) {
+    private void addInformationHeadersFromClaims(ServerWebExchange exchange, Session session) {
         exchange.getRequest().mutate()
-                .header(HeaderConstants.firstName, claims.get("firstname",String.class))
-                .header(HeaderConstants.lastName, claims.get("lastname",String.class))
-                .header(HeaderConstants.identificationNumber, claims.get("sub",String.class))
+                .header(HeaderConstants.firstName, session.getFirstname() )
+                .header(HeaderConstants.lastName, session.getLastname())
+                .header(HeaderConstants.identificationNumber, session.getIdentificationNumber())
                 .build();
 
     }
