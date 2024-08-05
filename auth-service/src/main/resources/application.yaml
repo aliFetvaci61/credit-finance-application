@@ -1,0 +1,8 @@
+server:
+  port: 6170
+  servlet:
+    context-path: /auth-service
+spring:
+  application:
+    name: auth-service
+
