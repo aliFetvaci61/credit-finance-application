@@ -14,5 +14,19 @@ services:
     networks:
       - my-network
 
+  mysql-db:
+    image: mysql:8.0.25
+    platform: linux/x86_64
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=credit-db
+      - MYSQL_PASSWORD=root
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d/:ro
+    networks:
+      - my-network
+
 networks:
   my-network:
