@@ -4,6 +4,8 @@ Credit finance Application
 
 # Software architecture design for Credit Finance Application
 
-![image](https://github.com/user-attachments/assets/1bceca8e-e5a1-4542-a690-1418d8a4f268)
+![image](https://github.com/user-attachments/assets/d3b971a1-cfd3-4908-ac8d-6bc972e5e0bc)
+
+
 
 
