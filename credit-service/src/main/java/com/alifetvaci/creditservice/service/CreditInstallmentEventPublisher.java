@@ -1,12 +1,11 @@
 package com.alifetvaci.creditservice.service;
 
-import com.alifetvaci.creditservice.service.model.CreditInstallmentPublishEvent;
+import com.alifetvaci.creditservice.service.model.CreditInstallment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
@@ -24,7 +23,7 @@ public class CreditInstallmentEventPublisher {
         this.objectMapper = objectMapper;
     }
 
-    public void publish(CreditInstallmentPublishEvent event) {
+    public void publish(CreditInstallment event) {
         try {
             log.info("CreditInstallmentEventPublisher -> publish is started, event: {}", event);
             String message = objectMapper.writeValueAsString(event);

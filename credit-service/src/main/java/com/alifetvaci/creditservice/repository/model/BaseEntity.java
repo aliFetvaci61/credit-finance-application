@@ -30,8 +30,8 @@ public abstract class BaseEntity {
     private int id;
 
     @Version
-    @Column(name = "VERSION", nullable = false)
-    private int version;
+    @Column(name = "VERSION")
+    private Long version;
 
     @Column(name = "DELETED", nullable = false)
     private boolean deleted;

@@ -26,8 +26,12 @@ spring:
     open-in-view: false
   kafka:
     bootstrap-servers: host.docker.internal:9092
+
 kafka:
   topic: credit-installment
+  consumer-group: credit-service
 
-
+elasticsearch:
+  host: host.docker.internal
+  port: 9200
 
