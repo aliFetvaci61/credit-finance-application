@@ -1,5 +1,5 @@
 server:
-  port: 6160
+  port: 6180
   servlet:
     context-path: /credit-service
 spring:

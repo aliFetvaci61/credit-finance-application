@@ -1,5 +1,5 @@
 server:
-  port: 6180
+  port: 6170
   servlet:
     context-path: /user-service
 spring:
@@ -24,4 +24,4 @@ spring:
 
 service:
   auth:
-    url: ${AUTH_SERVICE_BASE_URL:http://localhost:6170}
+    url: ${AUTH_SERVICE_BASE_URL:http://localhost:6190}
