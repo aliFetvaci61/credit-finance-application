@@ -1,0 +1,10 @@
+server:
+  port: 6160
+  servlet:
+    context-path: /credit-service
+spring:
+  application:
+    name: credit-service
+
+
+
