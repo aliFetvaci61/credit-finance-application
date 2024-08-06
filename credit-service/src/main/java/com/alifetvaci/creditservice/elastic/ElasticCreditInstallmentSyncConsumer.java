@@ -1,7 +1,9 @@
 package com.alifetvaci.creditservice.elastic;
 
-import com.alifetvaci.creditservice.repository.ElasticCreditInstallmentRepository;
-import com.alifetvaci.creditservice.service.model.CreditInstallment;
+import com.alifetvaci.creditservice.repository.ElasticCreditRepository;
+import com.alifetvaci.creditservice.repository.ElasticInstallmentRepository;
+import com.alifetvaci.creditservice.repository.model.CreditDocument;
+import com.alifetvaci.creditservice.repository.model.InstallmentDocument;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,17 +18,31 @@ import org.springframework.stereotype.Component;
 public class ElasticCreditInstallmentSyncConsumer {
 
     private final ObjectMapper objectMapper;
-    private final ElasticCreditInstallmentRepository elasticCreditInstallmentRepository;
+    private final ElasticCreditRepository elasticCreditRepository;
+    private final ElasticInstallmentRepository elasticInstallmentRepository;
 
 
-    @KafkaListener(topics = "credit-installment", groupId = "credit-service")
+    @KafkaListener(topics = "credit", groupId = "credit-service")
     @Retryable(value = RuntimeException.class, backoff = @Backoff(delay = 5000))
-    public void updateIndex(String message) {
+    public void updateCreditIndex(String message) {
         try {
-            log.info("ElasticCartConsumer -> consume is started, message: {}", message);
-            CreditInstallment creditInstallmentPublishEvent = objectMapper.readValue(message, CreditInstallment.class);
-            elasticCreditInstallmentRepository.save(creditInstallmentPublishEvent);
-            log.info("ElasticCartConsumer -> consume is finished, message: {}", message);
+            log.info("ElasticCreditConsumer -> consume is started, message: {}", message);
+            CreditDocument creditDocument = objectMapper.readValue(message, CreditDocument.class);
+            elasticCreditRepository.save(creditDocument);
+            log.info("ElasticCreditConsumer -> consume is finished, message: {}", message);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @KafkaListener(topics = "installment", groupId = "credit-service")
+    @Retryable(value = RuntimeException.class, backoff = @Backoff(delay = 5000))
+    public void updateInstallmentIndex(String message) {
+        try {
+            log.info("ElasticInstallmentConsumer -> consume is started, message: {}", message);
+            InstallmentDocument installmentDocument = objectMapper.readValue(message, InstallmentDocument.class);
+            elasticInstallmentRepository.save(installmentDocument);
+            log.info("ElasticInstallmentConsumer -> consume is finished, message: {}", message);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

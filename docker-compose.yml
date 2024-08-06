@@ -58,7 +58,6 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       GROUP_ID: driver-group-id
-      KAFKA_CREATE_TOPICS: "credit-installment"
     networks:
       - my-network
     
