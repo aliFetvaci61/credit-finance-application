@@ -1,5 +1,6 @@
 package com.alifetvaci.creditservice.elastic;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
@@ -11,18 +12,17 @@ import java.util.function.Supplier;
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "*")
 public class ElasticSearchConfiguration extends ElasticsearchConfiguration {
+
+    @Value(value = "${elasticsearch.host}")
+    private String host;
+
+    @Value(value = "${elasticsearch.port}")
+    private String port;
+
     @Override
     public ClientConfiguration clientConfiguration() {
-
-        Supplier<HttpHeaders> headersSupplier = () -> {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("X-Elastic-Product", "credit");
-            return headers;
-        };
-
         return ClientConfiguration.builder()
-                .connectedTo("localhost:9200")
-                .withHeaders(headersSupplier)
+                .connectedTo(host+":"+port)
                 .build();
     }
 

@@ -16,7 +16,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<?> handleException (Throwable ex){
-        log.error("GlobalExceptionHandler -> handleException is started, ex: {}", ex.getMessage());
+        log.error("GlobalExceptionHandler -> handleException is started, ex: {}", ex.getStackTrace());
         Map<String, Object> errors = new HashMap<>();
         errors.put("message", ex.getMessage());
         errors.put("success", false);

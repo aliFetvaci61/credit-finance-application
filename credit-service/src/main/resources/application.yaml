@@ -22,14 +22,26 @@ spring:
             non_contextual_creation: true
       jdbc:
         time_zone: UTC
-
     open-in-view: false
+
   kafka:
-    bootstrap-servers: host.docker.internal:9092
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: host.docker.internal:29092
+      group-id: credit-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.learning.events # change this with your event packages
+    producer:
+      acks: -1
+      bootstrap-servers: host.docker.internal:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 
 kafka:
   topic: credit-installment
-  consumer-group: credit-service
 
 elasticsearch:
   host: host.docker.internal

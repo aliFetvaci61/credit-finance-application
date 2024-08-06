@@ -45,6 +45,7 @@ services:
     image: confluentinc/cp-kafka:7.0.1
     container_name: broker
     ports:
+      - "29092:29092"
       - "9092:9092"
     depends_on:
       - zookeeper
@@ -57,7 +58,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       GROUP_ID: driver-group-id
-      KAFKA_CREATE_TOPICS: "contact-info-events"
+      KAFKA_CREATE_TOPICS: "credit-installment"
     networks:
       - my-network
     
@@ -105,6 +106,8 @@ services:
       - "6190:6190"
     volumes:
       - $HOME/app:/var/app
+    depends_on:
+      - cache
     environment:
       - SECURITY_JWT_SECRET_KEY=3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
       - SECURITY_JWT_EXPIRATION_TIME:300000
@@ -124,6 +127,8 @@ services:
       - $HOME/app:/var/app
     depends_on:
       - mysql-db
+      - elasticsearch
+      - broker
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/credit-db?useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
@@ -160,6 +165,8 @@ services:
       - "6161:6161"
     volumes:
       - $HOME/app:/var/app
+    depends_on:
+      - cache
 
 networks:
   my-network:
