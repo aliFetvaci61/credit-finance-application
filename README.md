@@ -1,4 +1,4 @@
-# Credit finance Application
+# Credit Finance Application
 
 This project is a credit application. Users can register and log in to the application and take out credits and pay the installments of these credits.
 
