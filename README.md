@@ -28,8 +28,8 @@ This project is a credit application. Users can register and log in to the appli
   - Security
 - Command Query Responsibility Segregation pattern
 - Database per service pattern
-- Event-driven
-- Decomposition patterns
+- Event-Driven Architecture Pattern
+- Decomposition pattern
 - Security - Sensitive Data Encapsulation
 
 # Software architecture design for Credit Finance Application
