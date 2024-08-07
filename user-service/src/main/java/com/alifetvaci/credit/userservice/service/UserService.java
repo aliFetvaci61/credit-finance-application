@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -25,9 +27,18 @@ public class UserService {
     private final AuthService authService;
 
     public void register(RegisterRequest request) {
+        Optional<User> userOptional = userRepository.findByIdentificationNumber(request.getIdentificationNumber());
+                if (userOptional.isPresent()) {
+                    throw GenericException.builder()
+                            .httpStatus(HttpStatus.BAD_REQUEST)
+                            .logMessage(this.getClass().getName() + ".register user already exists with identification number {0}", request.getIdentificationNumber())
+                            .message(ErrorCode.USER_ALREADY_EXISTS)
+                            .build();
+                }
         User user = User.builder().identificationNumber(request.getIdentificationNumber()).firstname(request.getFirstName()).lastname(request.getLastName()).password(passwordEncoder.encode(request.getPassword())).build();
         userRepository.save(user);
     }
+
 
     public LoginResponse login(LoginRequest request) {
         User user = userRepository.findByIdentificationNumber(request.getIdentificationNumber()).orElseThrow(() ->GenericException.builder()

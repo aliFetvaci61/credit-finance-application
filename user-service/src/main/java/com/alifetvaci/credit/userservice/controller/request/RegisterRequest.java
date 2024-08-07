@@ -3,9 +3,11 @@ package com.alifetvaci.credit.userservice.controller.request;
 
 import com.alifetvaci.credit.userservice.api.validator.ValidName;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class RegisterRequest {
 
     @NotBlank
@@ -22,5 +24,4 @@ public class RegisterRequest {
 
     @NotBlank
     private String password;
-
 }
