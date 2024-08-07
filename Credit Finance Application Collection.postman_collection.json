@@ -1,0 +1,272 @@
+{
+	"info": {
+		"_postman_id": "274b289f-3008-434a-ba44-b586cab6f8e6",
+		"name": "Credit Finance Application Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24225559"
+	},
+	"item": [
+		{
+			"name": "user-register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"identificationNumber\": \"21223054380\",\n  \"firstName\": \"ali\",\n  \"lastName\": \"veli\",\n  \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6161/user-service/api/v1/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6161",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user-login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let token = pm.response.json().data.token;",
+							"pm.environment.set('ACCESS_TOKEN', token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"identificationNumber\": \"21223054380\",\n  \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6161/user-service/api/v1/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6161",
+					"path": [
+						"user-service",
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-credit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"amount\": 5000,\n  \"installmentCount\": 8\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6161/credit-service/api/v1/credit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6161",
+					"path": [
+						"credit-service",
+						"api",
+						"v1",
+						"credit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-credits",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:6161/credit-service/api/v1/credit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6161",
+					"path": [
+						"credit-service",
+						"api",
+						"v1",
+						"credit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-credit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:6161/credit-service/api/v1/credit/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6161",
+					"path": [
+						"credit-service",
+						"api",
+						"v1",
+						"credit",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-installments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:6161/credit-service/api/v1/credit/1/installment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6161",
+					"path": [
+						"credit-service",
+						"api",
+						"v1",
+						"credit",
+						"1",
+						"installment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pay-installment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ACCESS_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:6161/credit-service/api/v1/credit/1/installment/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "6161",
+					"path": [
+						"credit-service",
+						"api",
+						"v1",
+						"credit",
+						"1",
+						"installment",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
