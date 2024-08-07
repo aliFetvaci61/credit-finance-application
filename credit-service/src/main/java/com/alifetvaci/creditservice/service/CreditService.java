@@ -127,8 +127,8 @@ public class CreditService {
 
         if (installmentRepository.findByCredit(credit).stream().noneMatch(c -> c.getStatus() == InstallmentStatus.UNPAID)) {
             credit.setStatus(CreditStatus.FINISHED);
-            creditRepository.save(credit);
-            eventPublisherService.publishPaidCreditInstallment(credit);
+            Credit finishedCredit = creditRepository.save(credit);
+            eventPublisherService.publishPaidCreditInstallment(finishedCredit);
         }
 
         eventPublisherService.publishCredit(getCreditDocumentFromCredit(credit));

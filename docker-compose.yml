@@ -166,6 +166,21 @@ services:
       - $HOME/app:/var/app
     depends_on:
       - cache
+  #notification-service config
+  notification-service:
+    container_name: notification-service
+    image: notification-service
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile
+    ports:
+      - "6150:6150"
+    volumes:
+      - $HOME/app:/var/app
+    depends_on:
+      - broker
+    networks:
+      - my-network
 
 networks:
   my-network:
