@@ -32,7 +32,7 @@ public class TokenFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         Route route = exchange.getAttribute(GATEWAY_ROUTE_ATTR);
-        if (route.getMetadata().containsKey("tokenRequired") && (boolean) route.getMetadata().get("tokenRequired")) {
+        if (Objects.nonNull(route) && route.getMetadata().containsKey("tokenRequired") && (boolean) route.getMetadata().get("tokenRequired")) {
             return authenticate(exchange, chain);
         } else {
             return chain.filter(exchange);
