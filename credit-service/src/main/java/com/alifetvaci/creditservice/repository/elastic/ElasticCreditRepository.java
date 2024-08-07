@@ -1,6 +1,6 @@
-package com.alifetvaci.creditservice.repository;
+package com.alifetvaci.creditservice.repository.elastic;
 
-import com.alifetvaci.creditservice.repository.model.CreditDocument;
+import com.alifetvaci.creditservice.repository.elastic.document.CreditDocument;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 

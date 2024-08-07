@@ -1,7 +1,7 @@
 package com.alifetvaci.creditservice.repository;
 
-import com.alifetvaci.creditservice.repository.model.Credit;
-import com.alifetvaci.creditservice.repository.model.Installment;
+import com.alifetvaci.creditservice.repository.model.entity.Credit;
+import com.alifetvaci.creditservice.repository.model.entity.Installment;
 import com.alifetvaci.creditservice.repository.model.enums.InstallmentStatus;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

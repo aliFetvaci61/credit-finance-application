@@ -1,6 +1,6 @@
-package com.alifetvaci.creditservice.repository.model;
+package com.alifetvaci.creditservice.repository.elastic.document;
 
-import com.alifetvaci.creditservice.repository.model.enums.InstallmentStatus;
+import com.alifetvaci.creditservice.repository.model.enums.CreditStatus;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,21 +16,19 @@ import java.math.BigDecimal;
 @Setter
 @ToString
 @Builder
-@Document(indexName = "installment")
+@Document(indexName = "credit")
 @AllArgsConstructor
 @NoArgsConstructor
-public class InstallmentDocument{
+public class CreditDocument{
 
     @Id
     private int id;
 
-    private InstallmentStatus status;
+    private CreditStatus status;
 
     private BigDecimal amount;
 
-    private long dueDate;
-
-    private int creditId;
+    private String identificationNumber;
 
     private boolean deleted;
 

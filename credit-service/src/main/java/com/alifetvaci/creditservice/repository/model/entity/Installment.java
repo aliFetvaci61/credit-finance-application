@@ -1,4 +1,4 @@
-package com.alifetvaci.creditservice.repository.model;
+package com.alifetvaci.creditservice.repository.model.entity;
 
 import com.alifetvaci.creditservice.repository.model.enums.InstallmentStatus;
 import jakarta.persistence.Column;

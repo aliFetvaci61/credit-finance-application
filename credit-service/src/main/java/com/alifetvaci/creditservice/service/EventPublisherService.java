@@ -1,8 +1,8 @@
 package com.alifetvaci.creditservice.service;
 
-import com.alifetvaci.creditservice.repository.model.Credit;
-import com.alifetvaci.creditservice.repository.model.CreditDocument;
-import com.alifetvaci.creditservice.repository.model.InstallmentDocument;
+import com.alifetvaci.creditservice.repository.model.entity.Credit;
+import com.alifetvaci.creditservice.repository.elastic.document.CreditDocument;
+import com.alifetvaci.creditservice.repository.elastic.document.InstallmentDocument;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;

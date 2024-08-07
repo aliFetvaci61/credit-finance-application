@@ -1,9 +1,9 @@
 package com.alifetvaci.creditservice.elastic;
 
-import com.alifetvaci.creditservice.repository.ElasticCreditRepository;
-import com.alifetvaci.creditservice.repository.ElasticInstallmentRepository;
-import com.alifetvaci.creditservice.repository.model.CreditDocument;
-import com.alifetvaci.creditservice.repository.model.InstallmentDocument;
+import com.alifetvaci.creditservice.repository.elastic.ElasticCreditRepository;
+import com.alifetvaci.creditservice.repository.elastic.ElasticInstallmentRepository;
+import com.alifetvaci.creditservice.repository.elastic.document.CreditDocument;
+import com.alifetvaci.creditservice.repository.elastic.document.InstallmentDocument;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

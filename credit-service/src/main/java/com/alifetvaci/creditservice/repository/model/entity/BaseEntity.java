@@ -1,4 +1,4 @@
-package com.alifetvaci.creditservice.repository.model;
+package com.alifetvaci.creditservice.repository.model.entity;
 
 
 import jakarta.persistence.Column;
