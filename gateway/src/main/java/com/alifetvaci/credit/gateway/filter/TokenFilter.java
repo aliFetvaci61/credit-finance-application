@@ -27,51 +27,54 @@ import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.G
 public class TokenFilter implements GlobalFilter {
 
     private final JwtService jwtService;
-
     private final SessionService sessionService;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
         Route route = exchange.getAttribute(GATEWAY_ROUTE_ATTR);
-        boolean tokenRequired = (boolean) route.getMetadata().get("tokenRequired");
-        if (tokenRequired) {
-            String token = getByKeyFromHeaders(HttpHeaders.AUTHORIZATION, exchange.getRequest());
-            final String authToken = token.substring(7);
-            Claims claims = jwtService.isTokenValid(authToken);
-            if (Objects.isNull(claims)) {
-                return Mono.error(new UnauthorizedException());
-            }
-            String uuid = claims.get("sub", String.class);
-            Session session = sessionService.getValue(uuid);
-            if(Objects.isNull(session)){
-                return Mono.error(new UnauthorizedException());
-            }
-            addInformationHeadersFromClaims(exchange, session);
-            return chain.filter(exchange);
-
-        }
-        else {
+        if (route.getMetadata().containsKey("tokenRequired") && (boolean) route.getMetadata().get("tokenRequired")) {
+            return authenticate(exchange, chain);
+        } else {
             return chain.filter(exchange);
         }
+    }
 
+    private Mono<Void> authenticate(ServerWebExchange exchange, GatewayFilterChain chain) {
+        String token = getToken(exchange);
+        Claims claims = jwtService.isTokenValid(token);
+        if (Objects.isNull(claims)) {
+            return Mono.error(new UnauthorizedException());
+        }
+        Session session = sessionService.getValue(getTokenSubject(claims));
+        if (Objects.isNull(session)) {
+            return Mono.error(new UnauthorizedException());
+        }
+        addInformationHeadersFromClaims(exchange, session);
+        return chain.filter(exchange);
+    }
+
+    private static String getTokenSubject(Claims claims) {
+        return claims.get("sub", String.class);
+    }
+
+    private String getToken(ServerWebExchange exchange) {
+        String token = getByKeyFromHeaders(HttpHeaders.AUTHORIZATION, exchange.getRequest());
+        if (Objects.isNull(token)) {
+            throw new UnauthorizedException();
+        }
+        return token.substring(7); // Remove "Bearer " prefix
     }
 
     private void addInformationHeadersFromClaims(ServerWebExchange exchange, Session session) {
-        exchange.getRequest().mutate()
-                .header(HeaderConstants.firstName, session.getFirstname() )
+        ServerHttpRequest request = exchange.getRequest().mutate()
+                .header(HeaderConstants.firstName, session.getFirstname())
                 .header(HeaderConstants.lastName, session.getLastname())
                 .header(HeaderConstants.identificationNumber, session.getIdentificationNumber())
                 .build();
-
+        exchange.mutate().request(request).build();
     }
 
     private String getByKeyFromHeaders(String key, ServerHttpRequest request) {
-        final var header = request.getHeaders().get(key);
-        if (Objects.nonNull(header)) {
-            return header.get(0);
-        }
-        return null;
+        return request.getHeaders().getFirst(key);
     }
-
 }
