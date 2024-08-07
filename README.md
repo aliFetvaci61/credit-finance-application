@@ -34,7 +34,8 @@ This project is a credit application. Users can register and log in to the appli
 
 # Software architecture design for Credit Finance Application
 
-![image](https://github.com/user-attachments/assets/0ce7d16d-1823-4296-ad2e-af6587142915)
+![image](https://github.com/user-attachments/assets/e0daeeb5-3db9-47dc-b2c8-f7a11cf63bcb)
+
 
 
 ## Installation
