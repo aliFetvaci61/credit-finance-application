@@ -32,9 +32,10 @@ This project is a credit application. Users can register and log in to the appli
 - Decomposition pattern
 - Security - Sensitive Data Encapsulation
 
-# Software architecture design for Credit Finance Application
+# Software Architecture Design for Credit Finance Application
 
-![image](https://github.com/user-attachments/assets/e0daeeb5-3db9-47dc-b2c8-f7a11cf63bcb)
+![image](https://github.com/user-attachments/assets/f6c308bd-f7d5-4c67-839f-15f7f32979f1)
+
 
 
 
