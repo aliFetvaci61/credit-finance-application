@@ -1,0 +1,13 @@
+server:
+  port: 6150
+spring:
+  application:
+    name: notification-service
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      bootstrap-servers: host.docker.internal:29092
+      group-id: notification-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
