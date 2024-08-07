@@ -170,7 +170,7 @@ public class CreditService {
                 .toList();
     }
 
-    private GenericException createCreditNotFoundException(int creditId) {
+    public GenericException createCreditNotFoundException(int creditId) {
         return GenericException.builder()
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .logMessage(this.getClass().getName() + ".getCredit credit not found with credit id {0}", creditId)
@@ -178,7 +178,7 @@ public class CreditService {
                 .build();
     }
 
-    private GenericException createCreditNotFoundException(String identificationNumber) {
+    public GenericException createCreditNotFoundException(String identificationNumber) {
         return GenericException.builder()
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .logMessage(this.getClass().getName() + ".getCredit credit not found with this identification number {0}", identificationNumber)
@@ -186,7 +186,7 @@ public class CreditService {
                 .build();
     }
 
-    private GenericException createInstallmentNotFoundException(int installmentId) {
+    public GenericException createInstallmentNotFoundException(int installmentId) {
         return GenericException.builder()
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .logMessage(this.getClass().getName() + ".getCredit unpaid installment not found with installment id {0}", installmentId)

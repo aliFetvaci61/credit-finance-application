@@ -1,0 +1,17 @@
+server:
+  port: 6190
+  servlet:
+    context-path: /auth-service
+spring:
+  application:
+    name: auth-service
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
+      password: ${SPRING_REDIS_PASSWORD:password}
+
+security:
+  jwt:
+    secret-key: ${SECURITY_JWT_SECRET_KEY:3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b}
+    expiration-time: ${SECURITY_JWT_EXPIRATION_TIME:300000}  #5 minutes in millisecond
