@@ -30,6 +30,7 @@ This project is a credit application. Users can register and log in to the appli
 - Database per service pattern
 - Event-driven
 - Decomposition patterns
+- Isolate Sensitive Data
 
 # Software architecture design for Credit Finance Application
 
