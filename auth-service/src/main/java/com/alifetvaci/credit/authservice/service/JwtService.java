@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.Map;
 
 @Service
 public class JwtService {
@@ -23,13 +22,9 @@ public class JwtService {
         return jwtExpiration;
     }
 
-    public String buildToken(
-            Map<String, Object> extraClaims,
-            String subject
-    ) {
+    public String buildToken(String subject) {
         return Jwts
                 .builder()
-                .setClaims(extraClaims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + getExpirationTime()))
