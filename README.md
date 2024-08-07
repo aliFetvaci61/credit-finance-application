@@ -34,7 +34,8 @@ This project is a credit application. Users can register and log in to the appli
 
 # Software architecture design for Credit Finance Application
 
-![image](https://github.com/user-attachments/assets/d3b971a1-cfd3-4908-ac8d-6bc972e5e0bc)
+![image](https://github.com/user-attachments/assets/0ce7d16d-1823-4296-ad2e-af6587142915)
+
 
 ## Installation
 - make build: Builds the Docker image for the application.
