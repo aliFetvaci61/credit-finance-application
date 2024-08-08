@@ -69,7 +69,15 @@ class CreditServiceTest {
                 .status(CreditStatus.STARTED)
                 .identificationNumber(identificationNumber)
                 .build();
-        when(creditRepository.save(any(Credit.class))).thenReturn(credit);
+        Installment installment = Installment.builder()
+                .id(1)
+                .amount(BigDecimal.valueOf(200))
+                .status(InstallmentStatus.UNPAID)
+                .dueDate(LocalDateTime.now())
+                .credit(credit)
+                .build();
+        when(creditRepository.save(any())).thenReturn(credit);
+        when(installmentRepository.save(any())).thenReturn(installment);
 
         // Act
         creditService.createCredit(request, identificationNumber);
@@ -182,6 +190,7 @@ class CreditServiceTest {
                 .credit(credit)
                 .build();
         when(creditRepository.findByIdAndIdentificationNumber(creditId, identificationNumber)).thenReturn(Optional.of(credit));
+        when(installmentRepository.save(any())).thenReturn(installment);
         when(installmentRepository.findByCredit(credit)).thenReturn(List.of(installment));
 
         // Act
